@@ -45,7 +45,7 @@ public:
 		getline(cin, s.address);
 		cout << "Enter Hour Rate: ";
 		cin >> s.hourlyRate;
-		while (rejectChar()) {
+		while (rejectChar() || s.hourlyRate >= 80 || s.hourlyRate <= 40) {
 			cout << "Try again, Enter Hour Rate: ";
 			cin >> s.hourlyRate;
 		}
@@ -485,5 +485,53 @@ public:
 		a.dateTerminated.month = 0;
 		a.dateTerminated.year = 0;
 		ts.push_back(a);
+	}
+
+	void view() {
+		if (ts.data() == NULL) {
+			cout << "No data is stored in the database\nRedirecting you to main menu\n";
+			return;
+		}
+		
+		int i = 0;
+		while (true) {
+			cout << "---------------------------------------------------------------" << endl;
+			cout << "ID: " << ts[i].tutorID << endl;
+			cout << "Name: " << ts[i].tutorName << endl;
+			cout << "Address: " << ts[i].address << endl;
+			cout << "Phone Number: " << ts[i].phoneNumber << endl;
+			cout << "Date Joined: " << ts[i].dateJoined.day << "-" << ts[i].dateJoined.month << "-" << ts[i].dateJoined.year << endl;
+			cout << "Hourly Rate (RM): " << ts[i].hourlyRate << endl;
+			cout << "Rating (/5): " << ts[i].currentRating << endl;
+			cout << "Center Code: " << ts[i].centerCode << endl;
+			cout << "Subject Code: " << ts[i].subjectCode << endl;
+			if (ts[i].dateTerminated.day == 0)
+				cout << "Termination Date: STILL EMPLOYED\n";
+			else
+				cout << "Termination Date: " << ts[i].dateTerminated.day << "-" << ts[i].dateTerminated.month << "-" << ts[i].dateTerminated.year << endl;
+			cout << "---------------------------------------------------------------" << endl;
+
+			char n;
+			cout << "Enter 'N' for next, 'P' for previous: ";
+			cin >> n;
+			if (n == 'n') {
+				i++;
+				system("cls");
+				if (i == ts.size()) {
+					cout << "You have reached the end of the list\n";
+					break;
+				}
+			}
+			else if (n == 'p') {
+				i--;
+				system("cls");
+				if (i == -1) {
+					cout << "You have reached the end of the list\n";
+					break;
+				}
+			}
+			else
+				break;
+		}
 	}
 };

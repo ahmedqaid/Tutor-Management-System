@@ -48,7 +48,7 @@ public:
 		getline(cin, f.address);
 		cout << "Enter Hour Rate: ";
 		cin >> f.hourlyRate;
-		while (rejectChar()) { //Will keep repeating until it finds the proper datatype
+		while (rejectChar() || f.hourlyRate >= 80 || f.hourlyRate <= 40) { //Will keep repeating until it finds the proper datatype
 			cout << "Try again, Enter Hour Rate: ";
 			cin >> f.hourlyRate;
 		}
@@ -559,5 +559,45 @@ public:
 		else
 			cout << "Termination Date: " << temp->dateTerminated.day << "-" << temp->dateTerminated.month << "-" << temp->dateTerminated.year << endl;
 		cout << "---------------------------------------------------------------" << endl;
+	}
+
+	void view() {
+		temp = list;
+		while (temp != NULL) {
+			cout << "---------------------------------------------------------------" << endl;
+			cout << "ID: " << temp->tutorID << endl;
+			cout << "Name: " << temp->tutorName << endl;
+			cout << "Address: " << temp->address << endl;
+			cout << "Phone Number: " << temp->phoneNumber << endl;
+			cout << "Date Joined: " << temp->dateJoined.day << "-" << temp->dateJoined.month << "-" << temp->dateJoined.year << endl;
+			cout << "Hourly Rate (RM): " << temp->hourlyRate << endl;
+			cout << "Rating (/5): " << temp->currentRating << endl;
+			cout << "Center Code: " << temp->centerCode << endl;
+			cout << "Subject Code: " << temp->subjectCode << endl;
+			if (temp->dateTerminated.day == 0)
+				cout << "Termination Date: STILL EMPLOYED\n";
+			else
+				cout << "Termination Date: " << temp->dateTerminated.day << "-" << temp->dateTerminated.month << "-" << temp->dateTerminated.year << endl;
+			cout << "---------------------------------------------------------------" << endl;
+			
+			char n;
+			cout << "Enter 'N' for next, 'P' for previous: ";
+			cin >> n;
+			if (n == 'n') {
+				temp = temp->next;
+				system("cls");
+				if (temp == NULL)
+					cout << "You have reached the end of the list\n";
+			}
+			else if (n == 'p') {
+				temp = temp->prev;
+				system("cls");
+				if (temp == NULL)
+					cout << "You have reached the end of the list\n";
+			}
+			else
+				break;
+		}
+
 	}
 };
